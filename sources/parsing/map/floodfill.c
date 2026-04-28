@@ -12,13 +12,12 @@
 
 #include "cub3d.h"
 
-// la map est une copie
-// return: 0 ou 1
+// map est une copie. retourne 1 si on sort du tableau (= leak)
 int	flood_fill(char **map, int x, int y)
 {
-	if (x < 0 || x >= (int)ft_strlen(map[y]))
-		return (1);
 	if (y < 0 || y >= ft_strslen(map))
+		return (1);
+	if (x < 0 || x >= (int)ft_strlen(map[y]))
 		return (1);
 	if (map[y][x] == '1' || map[y][x] == 'A')
 		return (0);

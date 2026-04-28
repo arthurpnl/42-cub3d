@@ -14,12 +14,11 @@
 
 void	ft_error(char *str)
 {
-	write(2, "Error: ", 7);
+	write(2, "Error\n", 6);
 	write(2, str, ft_strlen(str));
 	write(2, "\n", 1);
 }
 
-// Return strs len
 int	ft_strslen(char **strs)
 {
 	int	i;

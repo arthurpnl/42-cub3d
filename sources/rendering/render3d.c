@@ -12,10 +12,8 @@
 
 #include "cub3d.h"
 
-/*
-** Calcule la position fractionnaire du rayon sur le bord du mur
-** (0.0 a 1.0), pour l'echantillonnage horizontal de la texture.
-*/
+// position fractionnaire (0..1) du rayon sur le bord de case touche
+// -> sert a savoir quelle colonne piocher dans la texture
 static float	calc_wall_x(t_ray *ray, t_data *data)
 {
 	float	wall_x;
@@ -28,10 +26,6 @@ static float	calc_wall_x(t_ray *ray, t_data *data)
 	return (wall_x);
 }
 
-/*
-** Lit la couleur d'un pixel dans la texture en (tx, ty).
-** Retourne 0 si hors limites.
-*/
 static int	get_tex_color(t_img *tex, int tx, int ty)
 {
 	char	*pixel;
@@ -43,10 +37,7 @@ static int	get_tex_color(t_img *tex, int tx, int ty)
 	return (*(int *)pixel);
 }
 
-/*
-** Dessine plafond (0 a start), mur texture (start a end)
-** et sol (end a WIN_HEIGHT) pour la colonne col->col_x.
-*/
+// pour une colonne d'ecran : plafond, puis mur texture, puis sol
 static void	draw_wall_strip(t_data *data, t_col *col)
 {
 	int	y;
@@ -70,9 +61,6 @@ static void	draw_wall_strip(t_data *data, t_col *col)
 			color_to_int(data->floor));
 }
 
-/*
-** Calcule les parametres de la colonne et appelle draw_wall_strip.
-*/
 static void	draw_tex_col(t_data *data, int x, t_ray *ray, float perp)
 {
 	t_col	col;
@@ -99,10 +87,8 @@ static void	draw_tex_col(t_data *data, int x, t_ray *ray, float perp)
 	draw_wall_strip(data, &col);
 }
 
-/*
-** Rendu 3D : cast un rayon par colonne, corrige le fish-eye,
-** dessine la colonne texturee avec plafond et sol.
-*/
+// 1 rayon par colonne ecran
+// perp = correction fish-eye, sinon les murs sur les bords sont bombes
 void	render_3d(t_data *data)
 {
 	int		x;

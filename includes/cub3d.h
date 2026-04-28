@@ -33,36 +33,30 @@
 
 # define WIN_HEIGHT 720
 # define WIN_WIDTH 1080
-# define TILE_SIZE 32
 # define FOV 60
 # define PI 3.14159265358979323846
-# define COLOR_NORTH 0xAA00FF
-# define COLOR_SOUTH 0x0066FF
-# define COLOR_EAST 0x00CC66
-# define COLOR_WEST 0xFF8800
-# define WALL_COLOR 0xFFFFFF
-# define FLOOR_COLOR_2D 0x333333
-# define PLAYER_COLOR 0xFF0000
 # define MOVE_SPEED 0.1
 # define ROT_SPEED 0.05
-# define MMAP_R 80
-# define MMAP_S 10
-# define MMAP_CX 980
-# define MMAP_CY 100
 
 typedef enum e_keycode
 {
+	KEY_ESC = 65307,
 	KEY_LEFT = 65361,
 	KEY_RIGHT = 65363,
-	KEY_ESC = 65307,
-	KEY_UP = 65362,
-	KEY_DOWN = 65364,
+	KEY_W = 'w',
+	KEY_A = 'a',
+	KEY_S = 's',
+	KEY_D = 'd',
+	KEY_Z = 'z',
+	KEY_Q = 'q',
 }	t_keycode;
 
 typedef struct s_keys
 {
 	int	forward;
 	int	backward;
+	int	strafe_left;
+	int	strafe_right;
 	int	rot_left;
 	int	rot_right;
 }	t_keys;
@@ -87,7 +81,6 @@ typedef struct s_player
 	float	x;
 	float	y;
 	float	orientation;
-	int		spawn_orientation;
 }	t_player;
 
 typedef struct s_line
@@ -106,12 +99,6 @@ typedef struct s_img
 	int		tex_w;
 	int		tex_h;
 }	t_img;
-
-typedef struct s_point
-{
-	int	x;
-	int	y;
-}	t_point;
 
 typedef struct s_ray
 {
@@ -165,8 +152,6 @@ void	free_parsing(t_data *data);
 // -- Math --
 float	ft_sin(float x);
 float	ft_cos(float x);
-int		ft_abs(int n);
-float	ft_sqrt(float n);
 
 // -- Parsing --
 int		parsing(t_data *data, char *path);
@@ -193,18 +178,14 @@ int		color_to_int(t_color color);
 // -- 3D Rendering --
 void	render_3d(t_data *data);
 
-// -- Minimap --
-void	draw_minimap(t_data *data);
-void	draw_player(t_data *data);
-
-// -- Rays --
-void	draw_rays(t_data *data);
-void	draw_line(t_img *img, t_point a, t_point b, int color);
-t_point	cast_ray(t_data *data, float angle, t_ray *ray);
+// -- Raycasting --
+void	cast_ray(t_data *data, float angle, t_ray *ray);
 
 // -- Movement --
 void	move_forward(t_data *data);
 void	move_backward(t_data *data);
+void	strafe_left(t_data *data);
+void	strafe_right(t_data *data);
 void	rotate_player(t_data *data, int direction);
 void	update_movement(t_data *data);
 

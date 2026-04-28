@@ -12,7 +12,22 @@
 
 #include "cub3d.h"
 
-// check qu'on a 1 joueur (N/S/E/W) only et uniquement 0 / 1 / space
+// spawn au centre de la case (+ 0.5)
+static void	set_player(t_data *data, char c, int j, int i)
+{
+	data->player.x = (float)j + 0.5f;
+	data->player.y = (float)i + 0.5f;
+	if (c == 'N')
+		data->player.orientation = -PI / 2;
+	else if (c == 'S')
+		data->player.orientation = PI / 2;
+	else if (c == 'E')
+		data->player.orientation = 0;
+	else
+		data->player.orientation = PI;
+}
+
+// 1 seul joueur, et que des 01NSEW + whitespaces
 int	check_map_content(char **map, t_data *data, int player)
 {
 	int	i;
@@ -28,9 +43,7 @@ int	check_map_content(char **map, t_data *data, int player)
 				return (1);
 			if (is_in(map[i][j], "NESW") != -1)
 			{
-				data->player.spawn_orientation = is_in(map[i][j], "NESW");
-				data->player.x = (float)j;
-				data->player.y = (float)i;
+				set_player(data, map[i][j], j, i);
 				map[i][j] = '0';
 				player++;
 			}

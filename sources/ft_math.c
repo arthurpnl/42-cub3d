@@ -12,10 +12,7 @@
 
 #include "cub3d.h"
 
-/*
-** Normalise un angle en radians dans l'intervalle [-PI, PI]
-** pour assurer la convergence des series de Taylor.
-*/
+// ramene l'angle dans [-PI, PI] avant de developper la serie
 static float	ft_normalize_angle(float angle)
 {
 	while (angle > PI)
@@ -25,10 +22,7 @@ static float	ft_normalize_angle(float angle)
 	return (angle);
 }
 
-/*
-** Calcule le sinus de x (en radians) via la serie de Taylor
-** a 10 termes. Remplace math.h sin().
-*/
+// serie de Taylor de sin a 10 termes (on n'a pas le droit a math.h)
 float	ft_sin(float x)
 {
 	float	result;
@@ -48,10 +42,6 @@ float	ft_sin(float x)
 	return (result);
 }
 
-/*
-** Calcule le cosinus de x (en radians) via la serie de Taylor
-** a 10 termes. Remplace math.h cos().
-*/
 float	ft_cos(float x)
 {
 	float	result;
@@ -69,36 +59,4 @@ float	ft_cos(float x)
 		i++;
 	}
 	return (result);
-}
-
-/*
-** Retourne la valeur absolue de l'entier n.
-*/
-int	ft_abs(int n)
-{
-	if (n < 0)
-		return (-n);
-	return (n);
-}
-
-/*
-** Calcule la racine carree de n par la methode de Newton
-** (methode babylonienne). 10 iterations pour une precision
-** suffisante. Retourne 0 si n <= 0.
-*/
-float	ft_sqrt(float n)
-{
-	float	x;
-	int		i;
-
-	if (n <= 0)
-		return (0);
-	x = n;
-	i = 0;
-	while (i < 10)
-	{
-		x = (x + n / x) / 2.0;
-		i++;
-	}
-	return (x);
 }

@@ -12,10 +12,6 @@
 
 #include "cub3d.h"
 
-/*
-** Place un pixel dans le buffer image avec verification
-** des limites de la fenetre.
-*/
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
 	char	*dst;
@@ -26,11 +22,6 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-/*
-** Fonction appelee a chaque frame. Applique les mouvements
-** et dessine le rendu 3D (murs + plafond + sol).
-** Version sans bonus : pas de minimap.
-*/
 int	render_frame(t_data *data)
 {
 	update_movement(data);

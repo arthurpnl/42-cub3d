@@ -25,11 +25,6 @@ ft_memset.c ft_striteri.c ft_strrchr.c ft_isdigit.c ft_putchar_fd.c \
 ft_strjoin.c ft_strtrim.c ft_split_custom.c
 
 OBJ = $(SRC:.c=.o)
-BONUS = ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c \
-ft_lstdelone.c ft_lstiter.c ft_lstlast.c \
-ft_lstmap.c ft_lstnew.c ft_lstsize.c
-
-BONUS_OBJ = $(BONUS:.c=.o)
 
 all: $(NAME)
 
@@ -40,13 +35,11 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -c $<
 
 clean:
-	rm -f $(OBJ) $(BONUS_OBJ)
+	rm -f $(OBJ)
 
 fclean: clean
 	rm -f $(NAME)
-bonus:	$(OBJ) $(BONUS_OBJ)
-	ar rcs $(NAME) $(OBJ) $(BONUS_OBJ)
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re

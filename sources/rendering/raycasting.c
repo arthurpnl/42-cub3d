@@ -12,10 +12,7 @@
 
 #include "cub3d.h"
 
-/*
-** Initialise la direction du rayon et les delta distances.
-** delta = distance pour traverser une case en X ou Y.
-*/
+// delta = distance a parcourir pour traverser une case entiere en X ou Y
 static void	init_dda(t_ray *ray, t_data *data, float angle)
 {
 	ray->dir_x = ft_cos(angle);
@@ -32,9 +29,6 @@ static void	init_dda(t_ray *ray, t_data *data, float angle)
 		ray->delta_y = 1.0 / (ray->dir_y * ((ray->dir_y > 0) * 2 - 1));
 }
 
-/*
-** Initialise step (-1 ou 1) et distances laterales initiales.
-*/
 static void	init_step(t_ray *ray, t_data *data)
 {
 	if (ray->dir_x < 0)
@@ -59,10 +53,8 @@ static void	init_step(t_ray *ray, t_data *data)
 	}
 }
 
-/*
-** Execute le DDA : avance case par case jusqu'a un mur ou hors map.
-** ray->side = 0 si mur vertical touche, 1 si mur horizontal.
-*/
+// avance case par case jusqu'a tomber sur un '1' ou sortir de la map
+// side = 0 pour un mur Est/Ouest, 1 pour un mur Nord/Sud
 static void	run_dda(t_ray *ray, t_data *data)
 {
 	ray->side = 0;
@@ -84,39 +76,25 @@ static void	run_dda(t_ray *ray, t_data *data)
 			|| ray->map_x < 0 || ray->map_x >= data->map_w)
 			break ;
 		if (!data->map[ray->map_y]
-			|| data->map[ray->map_y][ray->map_x] == '\0'
+			|| ray->map_x >= (int)ft_strlen(data->map[ray->map_y])
 			|| data->map[ray->map_y][ray->map_x] == '1')
 			break ;
 	}
 }
 
-/*
-** Calcule le point d'impact exact et la distance perpendiculaire.
-** Stocke wall_dist dans ray pour le rendu 3D.
-*/
-static t_point	get_hit_point(t_ray *ray, t_data *data)
+// derniere distance parcourue avant de toucher le mur
+static void	set_wall_dist(t_ray *ray)
 {
-	t_point	hit;
-
 	if (ray->side == 0)
 		ray->wall_dist = ray->side_x - ray->delta_x;
 	else
 		ray->wall_dist = ray->side_y - ray->delta_y;
-	hit.x = (int)((data->player.x + ray->wall_dist
-				* ray->dir_x) * TILE_SIZE);
-	hit.y = (int)((data->player.y + ray->wall_dist
-				* ray->dir_y) * TILE_SIZE);
-	return (hit);
 }
 
-/*
-** Lance un rayon, remplit ray avec la distance et la face touchee.
-** Retourne le point d'impact en pixels.
-*/
-t_point	cast_ray(t_data *data, float angle, t_ray *ray)
+void	cast_ray(t_data *data, float angle, t_ray *ray)
 {
 	init_dda(ray, data, angle);
 	init_step(ray, data);
 	run_dda(ray, data);
-	return (get_hit_point(ray, data));
+	set_wall_dist(ray);
 }

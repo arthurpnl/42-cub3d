@@ -12,11 +12,6 @@
 
 #include "cub3d.h"
 
-/*
-** Calcule la largeur et la hauteur de la map en parcourant
-** le tableau data->map. map_h = nombre de lignes, map_w = ligne
-** la plus longue. Stocke les resultats dans data->map_w/map_h.
-*/
 static void	calc_map_size(t_data *data)
 {
 	int	y;
@@ -36,11 +31,6 @@ static void	calc_map_size(t_data *data)
 	}
 }
 
-/*
-** Cree l'image buffer (frame buffer) de taille WIN_WIDTH x WIN_HEIGHT.
-** Recupere l'adresse memoire des pixels via mlx_get_data_addr.
-** Retourne 1 en cas d'erreur, 0 si succes.
-*/
 static int	init_img(t_data *data)
 {
 	data->img.img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
@@ -54,11 +44,6 @@ static int	init_img(t_data *data)
 	return (0);
 }
 
-/*
-** Initialise la connexion MLX, cree la fenetre et l'image buffer.
-** En cas d'erreur a chaque etape, libere les ressources deja allouees
-** (cascade de free). Retourne 1 en cas d'erreur, 0 si succes.
-*/
 static int	init_mlx(t_data *data)
 {
 	data->mlx = mlx_init();
@@ -80,12 +65,6 @@ static int	init_mlx(t_data *data)
 	return (0);
 }
 
-/*
-** Point d'entree du rendu. Calcule les dimensions de la map, initialise
-** MLX, charge les textures, configure les hooks (clavier, fermeture),
-** lance la boucle de rendu (mlx_loop_hook -> render_frame) puis
-** libere tout a la sortie. Retourne 1 en cas d'erreur, 0 si succes.
-*/
 int	rendering(t_data *data)
 {
 	calc_map_size(data);

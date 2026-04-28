@@ -12,14 +12,6 @@
 
 #include "cub3d.h"
 
-/*
-** Libere toutes les ressources graphiques de maniere securisee :
-** 1. Detruit les 4 textures chargees (si elles existent)
-** 2. Detruit l'image buffer
-** 3. Detruit la fenetre
-** 4. Detruit la connexion X11 et free le pointeur mlx
-** Chaque etape verifie que le pointeur n'est pas NULL.
-*/
 void	free_rendering(t_data *data)
 {
 	int	i;
@@ -42,11 +34,6 @@ void	free_rendering(t_data *data)
 	}
 }
 
-/*
-** Callback appelee a la fermeture de la fenetre (croix ou ESC).
-** Libere les ressources graphiques puis les donnees du parsing,
-** et termine le programme avec exit(0). Retourne 0 (jamais atteint).
-*/
 int	close_window(t_data *data)
 {
 	free_rendering(data);
@@ -55,20 +42,18 @@ int	close_window(t_data *data)
 	return (0);
 }
 
-/*
-** Callback appelee lors d'un appui sur une touche (KeyPress, event 2).
-** Met a 1 le flag correspondant dans data->keys pour permettre
-** les mouvements simultanes. ESC appelle close_window directement.
-** Retourne toujours 0.
-*/
 int	handle_key(int keycode, t_data *data)
 {
 	if (keycode == KEY_ESC)
 		close_window(data);
-	else if (keycode == KEY_UP)
+	else if (keycode == KEY_W || keycode == KEY_Z)
 		data->keys.forward = 1;
-	else if (keycode == KEY_DOWN)
+	else if (keycode == KEY_S)
 		data->keys.backward = 1;
+	else if (keycode == KEY_A || keycode == KEY_Q)
+		data->keys.strafe_left = 1;
+	else if (keycode == KEY_D)
+		data->keys.strafe_right = 1;
 	else if (keycode == KEY_LEFT)
 		data->keys.rot_left = 1;
 	else if (keycode == KEY_RIGHT)
@@ -76,17 +61,16 @@ int	handle_key(int keycode, t_data *data)
 	return (0);
 }
 
-/*
-** Callback appelee lors du relachement d'une touche (KeyRelease, event 3).
-** Remet a 0 le flag correspondant dans data->keys pour arreter
-** le mouvement associe. Retourne toujours 0.
-*/
 int	handle_keyrelease(int keycode, t_data *data)
 {
-	if (keycode == KEY_UP)
+	if (keycode == KEY_W || keycode == KEY_Z)
 		data->keys.forward = 0;
-	else if (keycode == KEY_DOWN)
+	else if (keycode == KEY_S)
 		data->keys.backward = 0;
+	else if (keycode == KEY_A || keycode == KEY_Q)
+		data->keys.strafe_left = 0;
+	else if (keycode == KEY_D)
+		data->keys.strafe_right = 0;
 	else if (keycode == KEY_LEFT)
 		data->keys.rot_left = 0;
 	else if (keycode == KEY_RIGHT)

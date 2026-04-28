@@ -12,11 +12,6 @@
 
 #include "cub3d.h"
 
-/*
-** Version sans bonus : pas de collision.
-** Verifie si la position (x, y) est un mur (jamais appele en
-** mode mandatory, garde uniquement pour eviter un warning).
-*/
 static int	is_wall(t_data *data, float x, float y)
 {
 	int	mx;
@@ -33,46 +28,57 @@ static int	is_wall(t_data *data, float x, float y)
 	return (0);
 }
 
-/*
-** Deplace le joueur vers l'avant sans collision.
-*/
+// X et Y testes separement -> on glisse le long du mur en diagonale
 void	move_forward(t_data *data)
 {
-	data->player.x += ft_cos(data->player.orientation) * MOVE_SPEED;
-	data->player.y += ft_sin(data->player.orientation) * MOVE_SPEED;
-	(void)is_wall;
+	float	new_x;
+	float	new_y;
+
+	new_x = data->player.x + ft_cos(data->player.orientation) * MOVE_SPEED;
+	new_y = data->player.y + ft_sin(data->player.orientation) * MOVE_SPEED;
+	if (!is_wall(data, new_x, data->player.y))
+		data->player.x = new_x;
+	if (!is_wall(data, data->player.x, new_y))
+		data->player.y = new_y;
 }
 
-/*
-** Deplace le joueur vers l'arriere sans collision.
-*/
 void	move_backward(t_data *data)
 {
-	data->player.x -= ft_cos(data->player.orientation) * MOVE_SPEED;
-	data->player.y -= ft_sin(data->player.orientation) * MOVE_SPEED;
-	(void)is_wall;
+	float	new_x;
+	float	new_y;
+
+	new_x = data->player.x - ft_cos(data->player.orientation) * MOVE_SPEED;
+	new_y = data->player.y - ft_sin(data->player.orientation) * MOVE_SPEED;
+	if (!is_wall(data, new_x, data->player.y))
+		data->player.x = new_x;
+	if (!is_wall(data, data->player.x, new_y))
+		data->player.y = new_y;
 }
 
-/*
-** Modifie l'orientation du joueur de direction * ROT_SPEED radians.
-** direction = -1 pour tourner a gauche, 1 pour tourner a droite.
-*/
-void	rotate_player(t_data *data, int direction)
+// strafe = perpendiculaire au regard (orientation - PI/2)
+// identite : cos(o - PI/2) = sin(o), sin(o - PI/2) = -cos(o)
+void	strafe_left(t_data *data)
 {
-	data->player.orientation += direction * ROT_SPEED;
+	float	new_x;
+	float	new_y;
+
+	new_x = data->player.x + ft_sin(data->player.orientation) * MOVE_SPEED;
+	new_y = data->player.y - ft_cos(data->player.orientation) * MOVE_SPEED;
+	if (!is_wall(data, new_x, data->player.y))
+		data->player.x = new_x;
+	if (!is_wall(data, data->player.x, new_y))
+		data->player.y = new_y;
 }
 
-/*
-** Appelee a chaque frame, verifie les touches et applique le mouvement.
-*/
-void	update_movement(t_data *data)
+void	strafe_right(t_data *data)
 {
-	if (data->keys.forward)
-		move_forward(data);
-	if (data->keys.backward)
-		move_backward(data);
-	if (data->keys.rot_left)
-		rotate_player(data, -1);
-	if (data->keys.rot_right)
-		rotate_player(data, 1);
+	float	new_x;
+	float	new_y;
+
+	new_x = data->player.x - ft_sin(data->player.orientation) * MOVE_SPEED;
+	new_y = data->player.y + ft_cos(data->player.orientation) * MOVE_SPEED;
+	if (!is_wall(data, new_x, data->player.y))
+		data->player.x = new_x;
+	if (!is_wall(data, data->player.x, new_y))
+		data->player.y = new_y;
 }
