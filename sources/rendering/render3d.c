@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render3d.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skoudad <skoudad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arpenel <arpenel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 13:10:00 by skoudad           #+#    #+#             */
-/*   Updated: 2026/02/21 13:27:00 by skoudad          ###   ########.fr       */
+/*   Updated: 2026/04/29 18:30:34 by arpenel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ static void	draw_tex_col(t_data *data, int x, t_ray *ray, float perp)
 	col.h = (int)(WIN_HEIGHT / perp);
 	if (col.h <= 0)
 		col.h = 1;
-	col.start = -col.h / 2 + WIN_HEIGHT / 2;
-	col.end = col.h / 2 + WIN_HEIGHT / 2;
+	col.start = WIN_HEIGHT / 2 - col.h / 2;
+	col.end   = WIN_HEIGHT / 2 + col.h / 2;
 	if (col.start < 0)
 		col.start = 0;
 	if (col.end > WIN_HEIGHT)

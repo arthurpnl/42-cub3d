@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skoudad <skoudad@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arpenel <arpenel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 21:21:42 by skoudad           #+#    #+#             */
-/*   Updated: 2026/02/21 01:36:00 by skoudad          ###   ########.fr       */
+/*   Updated: 2026/04/29 16:37:15 by arpenel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define WIN_WIDTH 1080
 # define FOV 60
 # define PI 3.14159265358979323846
-# define MOVE_SPEED 0.1
+# define MOVE_SPEED 0.01
 # define ROT_SPEED 0.05
 
 typedef enum e_keycode
