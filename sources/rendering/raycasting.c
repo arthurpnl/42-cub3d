@@ -21,12 +21,16 @@ static void	init_dda(t_ray *ray, t_data *data, float angle)
 	ray->map_y = (int)data->player.y;
 	if (ray->dir_x == 0)
 		ray->delta_x = 1e30;
+	else if (ray->dir_x < 0)
+		ray->delta_x = 1.0 / -ray->dir_x;
 	else
-		ray->delta_x = 1.0 / (ray->dir_x * ((ray->dir_x > 0) * 2 - 1));
+		ray->delta_x = 1.0 / ray->dir_x;
 	if (ray->dir_y == 0)
 		ray->delta_y = 1e30;
+	else if (ray->dir_y < 0)
+		ray->delta_y = 1.0 / -ray->dir_y;
 	else
-		ray->delta_y = 1.0 / (ray->dir_y * ((ray->dir_y > 0) * 2 - 1));
+		ray->delta_y = 1.0 / ray->dir_y;
 }
 
 static void	init_step(t_ray *ray, t_data *data)
@@ -57,7 +61,6 @@ static void	init_step(t_ray *ray, t_data *data)
 // side = 0 pour un mur Est/Ouest, 1 pour un mur Nord/Sud
 static void	run_dda(t_ray *ray, t_data *data)
 {
-	ray->side = 0;
 	while (1)
 	{
 		if (ray->side_x < ray->side_y)
@@ -75,8 +78,7 @@ static void	run_dda(t_ray *ray, t_data *data)
 		if (ray->map_y < 0 || ray->map_y >= data->map_h
 			|| ray->map_x < 0 || ray->map_x >= data->map_w)
 			break ;
-		if (!data->map[ray->map_y]
-			|| ray->map_x >= (int)ft_strlen(data->map[ray->map_y])
+		if (ray->map_x >= (int)ft_strlen(data->map[ray->map_y])
 			|| data->map[ray->map_y][ray->map_x] == '1')
 			break ;
 	}
