@@ -10,10 +10,3 @@ cub3D
 # Editor / OS
 .DS_Store
 .vscode/
-.claude/
-*.swp
-*~
-
-# Subject (not part of submission)
-en.subject.pdf
-fr.subject.pdf
