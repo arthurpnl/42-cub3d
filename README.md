@@ -75,9 +75,8 @@ textures/, maps/
 
 ### About AI
 
-We used ChatGPT / Claude as a tutor, not as a code generator: to get the
-raycasting math explained differently when the tutorial wasn't clicking
-(camera plane, perpWallDist, fisheye correction), and to bounce ideas around
-for the parser (mainly the flood-fill to check that the map is closed).
-The code was written and debugged by us — if it's in the repo, we can
-explain it.
+AI tools were used **only to explain logic and theory** — never to write
+code. Specifically: clarifying the raycasting math (camera plane,
+perpWallDist, fisheye correction) and the flood-fill principle for the
+map closure check. All code in this repository was written and debugged
+by us, and we can explain every line of it.
