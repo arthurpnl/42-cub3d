@@ -31,7 +31,7 @@ char	**map_table(t_line *curr)
 {
 	char	**table;
 	int		size;
-	int		i ;
+	int		i;
 	int		size_line;
 
 	size = count_line(curr);

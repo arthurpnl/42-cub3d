@@ -3,7 +3,7 @@
 # ============================================================================
 
 NAME			= cub3D
-CC				= gcc
+CC				= cc
 CFLAGS			= -Wall -Wextra -Werror -std=gnu89 -g
 INCLUDES		= -I./includes -I./libft -I./gnl -I./minilibx-linux-master
 RM				= rm -f
