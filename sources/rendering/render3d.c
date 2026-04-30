@@ -6,7 +6,7 @@
 /*   By: arpenel <arpenel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/21 13:10:00 by skoudad           #+#    #+#             */
-/*   Updated: 2026/04/29 18:30:34 by arpenel          ###   ########.fr       */
+/*   Updated: 2026/04/30 15:21:28 by arpenel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	draw_tex_col(t_data *data, int x, t_ray *ray, float perp)
 	if (col.h <= 0)
 		col.h = 1;
 	col.start = WIN_HEIGHT / 2 - col.h / 2;
-	col.end   = WIN_HEIGHT / 2 + col.h / 2;
+	col.end = WIN_HEIGHT / 2 + col.h / 2;
 	if (col.start < 0)
 		col.start = 0;
 	if (col.end > WIN_HEIGHT)
